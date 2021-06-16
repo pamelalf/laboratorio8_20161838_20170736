@@ -14,29 +14,29 @@ $(document).ready(function () {
         $("#totalDeaths").val(info.Global.TotalDeaths).html(info.Global.TotalDeaths);
         $("#totalRecovered").val(info.Global.TotalRecovered).html(info.Global.TotalRecovered);
 
-        var date = info.Global.Date;
-        var newDate = fechaFormat(date);
-        $("#titulo-resumen-global").html("Resumen global al " + newDate);
+        var Globaldate = info.Global.Date;
+        var newGlobalDate = fechaFormat(Globaldate);
+        $("#titulo-resumen-global").html("Resumen global al " + newGlobalDate);
 
-        var listaPaises= info.Countries;
-        var listaPaisesSort = listaPaises.sort(sortJson("TotalConfirmed"));
+        var Paises_List= info.Countries;
+        var listaPaises= Paises_List.sort(sortJson("TotalConfirmed"));
 
         var contentHTML="";
 
-        $.each(listaPaisesSort, function (i, valor) {
-            var params = "detallePais/detallePais.html?name="+valor.Country+"&slug="+valor.Slug+"&countryCode="+valor.CountryCode+"&caseCovid=confirmed";
-            var nextURL = window.location.href.replace("index.html",params);
+        $.each(listaPaises, function (i, value) {
+            var parametros = "detallePais/detallePais.html?name="+value.Country+"&slug="+value.Slug+"&countryCode="+value.CountryCode+"&caseCovid=confirmed";
+            var sUrl = window.location.href.replace("index.html",parametros);
 
             contentHTML += "<tr>";
             contentHTML += "<td>" + (i + 1) + "</td>";
-            contentHTML += "<td>" + valor.Country + "</td>";
-            contentHTML += "<td>" + valor.TotalConfirmed + "</td>";
-            contentHTML += "<td>" + valor.TotalDeaths + "</td>";
-            contentHTML += "<td>" + valor.TotalRecovered+ "</td>";
-            contentHTML += "<td>" + valor.NewConfirmed + "</td>";
-            contentHTML += "<td>" + valor.NewDeaths + "</td>";
-            contentHTML += "<td>" + valor.NewRecovered + "</td>";
-            contentHTML += "<td><a href="+ nextUrl +">Enviar</a></td>"
+            contentHTML += "<td>" + value.Country + "</td>";
+            contentHTML += "<td>" + value.TotalConfirmed + "</td>";
+            contentHTML += "<td>" + value.TotalDeaths + "</td>";
+            contentHTML += "<td>" + value.TotalRecovered+ "</td>";
+            contentHTML += "<td>" + value.NewConfirmed + "</td>";
+            contentHTML += "<td>" + value.NewDeaths + "</td>";
+            contentHTML += "<td>" + value.NewRecovered + "</td>";
+            contentHTML += "<td><a href="+ sUrl +">Enviar</a></td>"
             contentHTML += "</tr>";
         })
         $("#body-paises").html(contentHTML);
@@ -48,20 +48,20 @@ $(document).ready(function () {
 
 function sortJson(key){
     return function(a,b){
-        let comparison = 0;
+        let comparador = 0;
         if (a[key] > b[key]) {
-            comparison = 1;
+            comparador = 1;
         }
         if (b[key] > a[key]) {
-            comparison = -1;
+            comparador = -1;
         }
-        return comparison;
+        return comparador;
     };
 }
 
 function fechaFormat(fecha) {
-    let dateSplit = fecha.split("T");
-    let df1 = dateSplit[0];
+    let date= fecha.split("T");
+    let df1 = date[0];
     let df2 = df1.replaceAll("-","/");
     return df2;
 }
