@@ -60,7 +60,7 @@ function sortJson(key){
 }
 
 function fechaFormat(fecha) {
-    let dateSplit = fecha.aplit("T");
+    let dateSplit = fecha.split("T");
     let df1 = dateSplit[0];
     let df2 = df1.replaceAll("-","/");
     return df2;
